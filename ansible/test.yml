@@ -1,0 +1,22 @@
+- hosts: master 
+  become: yes
+  tasks:
+    - name: Echoing server name
+      command: echo $HOSTNAME 
+
+        #- name: Create a Deployment by reading the definition from a local file
+        #kubernetes.core.k8s:
+        #state: present
+        #src: k8master/flannel.yml
+
+- hosts: worker1 
+  become: yes
+  tasks:
+    - name: Echoing server name
+      command: echo $HOSTNAME 
+
+- hosts: worker2 
+  become: yes
+  tasks:
+    - name: Echoing server name
+      command: echo $HOSTNAME 

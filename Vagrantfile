@@ -24,6 +24,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision "shell", inline: "apt-get update && apt-get upgrade -y"
     master.vm.provision "file", source: "ansible/hosts", destination: "~/"
     master.vm.provision "shell", inline: "cp -f /home/vagrant/hosts /etc/hosts"
+    master.vm.provision "ansible" do |ansible|
+      ansible.limit	= "master"
+      ansible.verbose	= "True" 
+      #ansible.playbook = "ansible/test.yml"
+      #ansible.playbook	= "ansible/step01_create_user.yml"
+      #ansible.playbook = "ansible/step02_kube-dependencies.yml"
+      #ansible.playbook = "ansible/step03_initialize_master.yml"
+      #ansible.playbook = "ansible/step04_join_cluster.yml"
+      ansible.playbook = "ansible/build-master.yml"
+
+    end
   end
 
   config.vm.define "worker1" do |worker1|
@@ -32,6 +43,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     worker1.vm.provision "shell", inline: "apt-get update && apt-get upgrade -y"
     worker1.vm.provision "file", source: "ansible/hosts", destination: "~/"
     worker1.vm.provision "shell", inline: "cp -f /home/vagrant/hosts /etc/hosts"
+    worker1.vm.provision "ansible" do |ansible|
+      ansible.limit	= "worker1"
+      ansible.verbose	= "True" 
+      #ansible.playbook = "ansible/test.yml"
+      #ansible.playbook	= "ansible/step01_create_user.yml"
+      #ansible.playbook = "ansible/step02_kube-dependencies.yml"
+      #ansible.playbook = "ansible/step03_initialize_master.yml"
+      #ansible.playbook = "ansible/step04_join_cluster.yml"
+      ansible.playbook = "ansible/build-workers.yml"
+    end
   end
   
   config.vm.define "worker2" do |worker2|
@@ -40,13 +61,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     worker2.vm.provision "shell", inline: "apt-get update && apt-get upgrade -y"
     worker2.vm.provision "file", source: "ansible/hosts", destination: "~/"
     worker2.vm.provision "shell", inline: "cp -f /home/vagrant/hosts /etc/hosts"
+    worker2.vm.provision "ansible" do |ansible|
+      ansible.limit	= "worker2"
+      ansible.verbose	= "True" 
+      #ansible.playbook = "ansible/test.yml"
+      #ansible.playbook	= "ansible/step01_create_user.yml"
+      #ansible.playbook = "ansible/step02_kube-dependencies.yml"
+      #ansible.playbook = "ansible/step03_initialize_master.yml"
+      #ansible.playbook = "ansible/step04_join_cluster.yml"
+      ansible.playbook = "ansible/build-workers.yml"
+    end
   end
   
-  config.vm.provision "ansible" do |ansible|
+  #config.vm.provision "ansible" do |ansible|
 
     #ansible.limit          = "all" # or only "nodes" group, etc.
-    ansible.inventory_path = "vagrant_ansible_inventory"
-    ansible.playbook = "ansible/create-user.yml"
+    #ansible.inventory_path = "InventoryFile"
+    #ansible.playbook = "ansible/step01_create_user.yml"
     #ansible.playbook = "ansible/install-kubernates.yml"
 
 
@@ -60,6 +91,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #ansible.playbook = "ansible/configure-nfs-client.yml"
     #ansible.playbook = "ansible/init-nfs-storageClass.yml"
     #ansible.playbook = "ansible/deploy-runner.yml"
-  end
+  #end
 end
 

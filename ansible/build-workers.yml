@@ -1,0 +1,17 @@
+- name: Creating UBUTU User on Worker Nodes
+  ansible.builtin.import_playbook: step01_create_user.yml
+- name: Installing K8 Dependencies on Worker Nodes
+  ansible.builtin.import_playbook: step02_kube-dependencies.yml
+- name: Initializing Master Node 
+  ansible.builtin.import_playbook: step03_initialize_master.yml
+- name: Join Worker Nodes to cluster
+  ansible.builtin.import_playbook: step04_join_cluster.yml
+#- name: Deploying NGINX Server
+#  ansible.builtin.import_playbook: step05_nginx_deployment.yml
+#- name: Installing NFS Client 
+#  ansible.builtin.import_playbook: step06_nfs_client_setup.yml
+#- name: Initializing NFS Storage Class
+#  ansible.builtin.import_playbook: step07_initialize_nfs_storage_class.yml
+#- name: Deploying GITLAB Runner
+#  ansible.builtin.import_playbook: step08_runner_deployment.yml
+

@@ -1,8 +1,8 @@
-- hosts: all
+- hosts: all 
   become: yes
   tasks:
     - name: create the 'ubuntu' user
-      user: name=ubuntu append=yes state=present createhome=yes shell=/bin/bash
+      user: name=ubuntu append=yes state=present createhome=yes shell=/bin/bash generate_ssh_key=yes
 
     - name: allow 'ubuntu' to have passwordless sudo
       lineinfile:

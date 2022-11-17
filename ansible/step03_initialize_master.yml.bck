@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: master
   become: yes
   tasks:
     - name: Forwarding IPv4 and letting iptables see bridged traffic 
@@ -25,11 +25,8 @@
     - name: Restarting SYSCTL 
       command: /usr/sbin/sysctl --system
 
-- hosts: master
-  become: yes
-  tasks:
     - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.10.14 | tee cluster_initialized.txt
+      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/containerd/containerd.sock | tee cluster_initialized.txt
       args:
         chdir: /home/ubuntu 
         creates: cluster_initialized.txt 
@@ -48,15 +45,8 @@
         remote_src: yes
         owner: ubuntu
 
-    - name: Wait for port 6443 to become open for API services
-      wait_for:
-        #timeout: 300 #wait for 5 mins
-        #delegate_to: localhost
-        port: 6443
-        delay: 60
-
     - name: install Pod network
-      shell: kubectl --kubeconfig /etc/kubernetes/kubelet.conf apply -f  k8master/flannel.yml | tee  pod_network_setup.txt
+      shell: kubectl apply -f  k8master/flannel.yml | tee  pod_network_setup.txt
       args:
         chdir: /home/ubuntu 
         creates: pod_network_setup.txt
