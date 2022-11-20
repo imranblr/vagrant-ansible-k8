@@ -56,9 +56,9 @@
         delay: 60
 
     - name: install Pod network
-      shell: kubectl --kubeconfig /etc/kubernetes/kubelet.conf apply -f  k8master/flannel.yml | tee  pod_network_setup.txt
+      shell: kubectl --kubeconfig /home/ubuntu/.kube/config apply -f  k8master/flannel.yml | tee pod_network_setup.txt
       args:
-        chdir: /home/ubuntu 
+        chdir: /home/ubuntu
         creates: pod_network_setup.txt
 
     # - name: Reboot the Master Node (Wait for 5 min)

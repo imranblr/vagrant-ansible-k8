@@ -21,7 +21,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.network "private_network", ip: "192.168.10.14"
     master.vm.provision "file", source: "ansible/k8master", destination: "~/"
     master.vm.provision "shell", inline: "cp -rf /home/vagrant/k8master /home/ubuntu/ && chown ubuntu:ubuntu -R /home/ubuntu"
-    master.vm.provision "shell", inline: "apt-get update && apt-get upgrade -y"
+    master.vm.provision "shell", inline: "apt-get update -qq || true"
+    master.vm.provision "shell", inline: "apt-get upgrade -y || true"
     master.vm.provision "file", source: "ansible/hosts", destination: "~/"
     master.vm.provision "shell", inline: "cp -f /home/vagrant/hosts /etc/hosts"
     master.vm.provision "ansible" do |ansible|
@@ -40,7 +41,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "worker1" do |worker1|
     worker1.vm.hostname = "worker1"
     worker1.vm.network "private_network", ip: "192.168.10.15"
-    worker1.vm.provision "shell", inline: "apt-get update && apt-get upgrade -y"
+    worker1.vm.provision "shell", inline: "apt-get update -qq || true"
+    worker1.vm.provision "shell", inline: "apt-get upgrade -y || true"
     worker1.vm.provision "file", source: "ansible/hosts", destination: "~/"
     worker1.vm.provision "shell", inline: "cp -f /home/vagrant/hosts /etc/hosts"
     worker1.vm.provision "ansible" do |ansible|
@@ -58,7 +60,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "worker2" do |worker2|
     worker2.vm.hostname = "worker2"
     worker2.vm.network "private_network", ip: "192.168.10.16"
-    worker2.vm.provision "shell", inline: "apt-get update && apt-get upgrade -y"
+    worker2.vm.provision "shell", inline: "apt-get update -qq || true"
+    worker2.vm.provision "shell", inline: "apt-get upgrade -y || true"
     worker2.vm.provision "file", source: "ansible/hosts", destination: "~/"
     worker2.vm.provision "shell", inline: "cp -f /home/vagrant/hosts /etc/hosts"
     worker2.vm.provision "ansible" do |ansible|

@@ -1,0 +1,12 @@
+Log created: 2022-11-18T07:29:48.972722000Z
+Process ID:  161902 (0x2786e)
+Parent PID:  1 (0x1)
+Executable:  /usr/lib/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: vagrant-ansible-k8_worker2_1668671406673_36661
+Arg[3]: --startvm
+Arg[4]: ca73332a-3201-4de6-a2e1-b52ecad17f23
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2
